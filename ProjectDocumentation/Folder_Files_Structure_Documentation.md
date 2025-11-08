@@ -1,3 +1,5 @@
+```
+
 customer-frontend/
 │
 ├── public/                          // 📁 PURPOSE: Static files served directly to browser
@@ -213,3 +215,5 @@ customer-frontend/
 ├── tailwind.config.js               // 📄 PURPOSE: Tailwind CSS config
 ├── vite.config.js                   // 📄 PURPOSE: Vite build tool config
 └── README.md                        // 📄 PURPOSE: Documentation
+
+```
