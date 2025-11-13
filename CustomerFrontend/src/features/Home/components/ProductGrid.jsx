@@ -3,7 +3,7 @@ import { Filter, SortAsc, Grid3x3, Grid2x2 } from 'lucide-react';
 import ProductCard from '../../../core/components/ProductCard';
 import { products, brands } from '../data/mockData';
 
-const ProductGrid = ({ selectedCategory = 'All Products', searchTerm = '' }) => {
+const ProductGrid = ({ selectedCategory = 'All Products', searchTerm = '', onAddToCart, onToggleWishlist, wishlist = [] }) => {
   const [selectedBrand, setSelectedBrand] = useState('All');
   const [gridView, setGridView] = useState('grid-4');
   const [visibleCount, setVisibleCount] = useState(8);
@@ -201,7 +201,13 @@ const ProductGrid = ({ selectedCategory = 'All Products', searchTerm = '' }) => 
               : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
           }`}>
             {displayedProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard 
+                key={product.id} 
+                product={product}
+                onAddToCart={onAddToCart}
+                onToggleWishlist={onToggleWishlist}
+                isWishlisted={wishlist.some(item => item.id === product.id)}
+              />
             ))}
           </div>
         )}
