@@ -3,12 +3,10 @@ import { ShoppingCart, User, Bell, Menu, X, ChevronDown, LogOut, Heart, Package,
 import SearchBar from '../components/SearchBar';
 import Navigation from './Navigation';
 
-const Header = ({ onCategoryChange, onSearch }) => {
+const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }) => {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [cartCount] = useState(3);
-  const [notificationCount] = useState(5);
   const isLoggedIn = true;
 
   useEffect(() => {
@@ -57,11 +55,6 @@ const Header = ({ onCategoryChange, onSearch }) => {
                 {/* Notifications */}
                 <button className="relative p-2.5 hover:bg-white/10 rounded-lg transition group cursor-pointer">
                   <Bell className="w-6 h-6" />
-                  {notificationCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center animate-pulse">
-                      {notificationCount}
-                    </span>
-                  )}
                   <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-9999">
                     Notifications
                   </span>
@@ -70,9 +63,11 @@ const Header = ({ onCategoryChange, onSearch }) => {
                 {/* Wishlist */}
                 <button className="relative p-2.5 hover:bg-white/10 rounded-lg transition group hidden sm:block cursor-pointer">
                   <Heart className="w-6 h-6" />
-                  <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                    2
-                  </span>
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                      {wishlistCount}
+                    </span>
+                  )}
                   <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-9999">
                     Wishlist
                   </span>

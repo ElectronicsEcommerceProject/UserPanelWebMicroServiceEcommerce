@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Heart, ShoppingCart, Star, Eye, Zap } from 'lucide-react';
 
-const ProductCard = ({ product }) => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+const ProductCard = ({ product, onAddToCart, onToggleWishlist, isWishlisted = false }) => {
   const [imageLoading, setImageLoading] = useState(true);
 
   const discountPercentage = product.discount || 0;
@@ -28,7 +27,10 @@ const ProductCard = ({ product }) => {
 
       {/* Wishlist Button */}
       <button 
-        onClick={() => setIsWishlisted(!isWishlisted)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleWishlist?.(product);
+        }}
         className="absolute top-3 right-3 z-10 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white shadow-lg transition group/wishlist cursor-pointer"
       >
         <Heart className={`w-5 h-5 transition ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600 group-hover/wishlist:text-red-500'}`} />
@@ -51,7 +53,13 @@ const ProductCard = ({ product }) => {
           <button className="p-3 bg-white rounded-full hover:bg-gray-100 transition transform hover:scale-110 cursor-pointer">
             <Eye className="w-5 h-5 text-gray-700" />
           </button>
-          <button className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition transform hover:scale-110 cursor-pointer">
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart?.(product);
+            }}
+            className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition transform hover:scale-110 cursor-pointer"
+          >
             <ShoppingCart className="w-5 h-5" />
           </button>
         </div>
@@ -104,7 +112,10 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Add to Cart Button */}
-        <button className="w-full bg-linear-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-lg font-medium hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+        <button 
+          onClick={() => onAddToCart?.(product)}
+          className="w-full bg-linear-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-lg font-medium hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+        >
           <ShoppingCart className="w-4 h-4" />
           Add to Cart
         </button>
