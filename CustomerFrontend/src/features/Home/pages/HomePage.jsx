@@ -1,13 +1,39 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import MainLayout from '../../../core/layout/MainLayout';
 import HeroBanner from '../components/HeroBanner';
 import ProductGrid from '../components/ProductGrid';
 
 const HomePage = () => {
+  const [searchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [searchTerm, setSearchTerm] = useState('');
-  const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const saved = localStorage.getItem('cart');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [wishlist, setWishlist] = useState(() => {
+    const saved = localStorage.getItem('wishlist');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category) {
+      setSelectedCategory(category);
+      setTimeout(() => {
+        window.scrollTo({ top: 600, behavior: 'smooth' });
+      }, 100);
+    }
+  }, [searchParams]);
 
   const handleAddToCart = useCallback((product) => {
     setCart(prev => {
@@ -37,6 +63,7 @@ const HomePage = () => {
       onSearch={setSearchTerm}
       cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
       wishlistCount={wishlist.length}
+      notificationCount={3}
     >
       <HeroBanner />
       <ProductGrid 
