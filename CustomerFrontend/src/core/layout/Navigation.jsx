@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, Grid, Smartphone, Headphones, Battery, Speaker, Cable, Cpu, Watch } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const categories = [
   { id: 1, name: 'All Products', icon: Grid },
@@ -13,13 +14,18 @@ const categories = [
 ];
 
 const Navigation = ({ onCategoryChange }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All Products');
 
   const handleCategorySelect = (categoryName) => {
     setActiveCategory(categoryName);
     setShowCategoryDropdown(false);
-    if (onCategoryChange) {
+    
+    if (location.pathname === '/orders') {
+      navigate(`/?category=${encodeURIComponent(categoryName)}`);
+    } else if (onCategoryChange) {
       onCategoryChange(categoryName);
     }
   };
@@ -88,7 +94,14 @@ const Navigation = ({ onCategoryChange }) => {
           })}
 
           {/* Special Offers */}
-          <button className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-linear-to-r from-red-500 to-pink-500 text-white font-medium whitespace-nowrap hover:shadow-lg transition-all ml-auto cursor-pointer">
+          <button 
+            onClick={() => {
+              if (location.pathname === '/orders') {
+                navigate('/?deals=hot');
+              }
+            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-linear-to-r from-red-500 to-pink-500 text-white font-medium whitespace-nowrap hover:shadow-lg transition-all ml-auto cursor-pointer"
+          >
             🔥 Hot Deals
           </button>
         </div>

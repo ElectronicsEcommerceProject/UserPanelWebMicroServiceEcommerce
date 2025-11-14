@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, User, Bell, Menu, X, ChevronDown, LogOut, Heart, Package, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import Navigation from './Navigation';
 
-const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }) => {
+const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, notificationCount = 0 }) => {
+  const navigate = useNavigate();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,30 +41,41 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }
                     <ShoppingCart className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold tracking-tight">MAA LAXMI</h1>
-                    <p className="text-xs text-white/80">Electronics Store</p>
+                    <h1 className="text-lg md:text-2xl font-bold tracking-tight">MAA LAXMI</h1>
+                    <p className="text-xs text-white/80 hidden sm:block">Electronics Store</p>
                   </div>
                 </div>
               </div>
 
               {/* Search Bar - Desktop */}
-              <div className="hidden lg:block flex-1 max-w-2xl mx-8">
+              <div className="hidden md:block flex-1 max-w-2xl mx-4 lg:mx-8">
                 <SearchBar onSearch={onSearch} />
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
-                {/* Notifications */}
-                <button className="relative p-2.5 hover:bg-white/10 rounded-lg transition group cursor-pointer">
-                  <Bell className="w-6 h-6" />
+              <div className="flex items-center gap-1 md:gap-2">
+                {/* Notifications - Desktop */}
+                <button 
+                  onClick={() => navigate('/orders?section=notifications')}
+                  className="relative p-2 md:p-2.5 hover:bg-white/10 rounded-lg transition group cursor-pointer hidden md:block"
+                >
+                  <Bell className="w-5 h-5 md:w-6 md:h-6" />
+                  {notificationCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                      {notificationCount}
+                    </span>
+                  )}
                   <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-9999">
                     Notifications
                   </span>
                 </button>
 
-                {/* Wishlist */}
-                <button className="relative p-2.5 hover:bg-white/10 rounded-lg transition group hidden sm:block cursor-pointer">
-                  <Heart className="w-6 h-6" />
+                {/* Wishlist - Desktop */}
+                <button 
+                  onClick={() => navigate('/orders?section=wishlist')}
+                  className="relative p-2 md:p-2.5 hover:bg-white/10 rounded-lg transition group cursor-pointer hidden md:block"
+                >
+                  <Heart className="w-5 h-5 md:w-6 md:h-6" />
                   {wishlistCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                       {wishlistCount}
@@ -71,6 +84,20 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }
                   <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-9999">
                     Wishlist
                   </span>
+                </button>
+
+                {/* Cart */}
+                <button 
+                  onClick={() => navigate('/orders?section=cart')}
+                  className="relative flex items-center gap-1 md:gap-2 bg-white/10 backdrop-blur-sm px-2 py-2 md:px-4 md:py-2.5 rounded-lg hover:bg-white/20 transition cursor-pointer"
+                >
+                  <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+                  <span className="hidden sm:block font-medium text-sm md:text-base">Cart</span>
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center animate-bounce">
+                      {cartCount}
+                    </span>
+                  )}
                 </button>
 
                 {/* User Menu */}
@@ -107,15 +134,73 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }
                               </div>
                             </div>
                             <div className="p-2">
-                              <button className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition">
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=profile');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
+                                <User className="w-5 h-5 text-gray-600" />
+                                <span className="text-gray-700">Profile Information</span>
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=address');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
+                                <Package className="w-5 h-5 text-gray-600" />
+                                <span className="text-gray-700">Manage Address</span>
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=orders');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
                                 <Package className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">My Orders</span>
                               </button>
-                              <button className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition">
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=notifications');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
+                                <Bell className="w-5 h-5 text-gray-600" />
+                                <span className="text-gray-700">Notifications</span>
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=wishlist');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
                                 <Heart className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Wishlist</span>
                               </button>
-                              <button className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition">
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=cart');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
+                                <ShoppingCart className="w-5 h-5 text-gray-600" />
+                                <span className="text-gray-700">Cart</span>
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  navigate('/orders?section=settings');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                              >
                                 <Settings className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Settings</span>
                               </button>
@@ -140,22 +225,11 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }
                     </>
                   )}
                 </div>
-
-                {/* Cart */}
-                <button className="relative flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2.5 rounded-lg hover:bg-white/20 transition cursor-pointer">
-                  <ShoppingCart className="w-6 h-6" />
-                  <span className="hidden sm:block font-medium">Cart</span>
-                  {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center animate-bounce">
-                      {cartCount}
-                    </span>
-                  )}
-                </button>
               </div>
             </div>
 
             {/* Mobile Search */}
-            <div className="lg:hidden pb-3">
+            <div className="md:hidden pb-3">
               <SearchBar onSearch={onSearch} />
             </div>
           </div>
@@ -167,12 +241,91 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0 }
 
       {/* Mobile Menu */}
       {showMobileMenu && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setShowMobileMenu(false)}>
+        <div className="fixed inset-0 bg-black/50 z-60 lg:hidden" onClick={() => setShowMobileMenu(false)}>
           <div className="bg-white w-80 h-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="p-4 bg-linear-to-r from-indigo-600 to-purple-600 text-white">
-              <h2 className="text-xl font-semibold">Menu</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Menu</h2>
+                <button onClick={() => setShowMobileMenu(false)}>
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
             </div>
-            {/* Add mobile menu content here */}
+            <div className="p-4">
+              {/* Notifications */}
+              <button 
+                onClick={() => {
+                  navigate('/orders?section=notifications');
+                  setShowMobileMenu(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-lg transition text-left"
+              >
+                <Bell className="w-5 h-5 text-gray-600" />
+                <span className="text-gray-700">Notifications</span>
+              </button>
+              
+              {/* Wishlist */}
+              <button 
+                onClick={() => {
+                  navigate('/orders?section=wishlist');
+                  setShowMobileMenu(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-lg transition text-left"
+              >
+                <Heart className="w-5 h-5 text-gray-600" />
+                <span className="text-gray-700">Wishlist</span>
+                {wishlistCount > 0 && (
+                  <span className="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                    {wishlistCount}
+                  </span>
+                )}
+              </button>
+              
+              {/* Cart */}
+              <button 
+                onClick={() => {
+                  navigate('/orders?section=cart');
+                  setShowMobileMenu(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-lg transition text-left"
+              >
+                <ShoppingCart className="w-5 h-5 text-gray-600" />
+                <span className="text-gray-700">Cart</span>
+                {cartCount > 0 && (
+                  <span className="ml-auto bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+              
+              <hr className="my-4" />
+              
+              {/* My Orders */}
+              <button 
+                onClick={() => {
+                  navigate('/orders');
+                  setShowMobileMenu(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-lg transition text-left"
+              >
+                <Package className="w-5 h-5 text-gray-600" />
+                <span className="text-gray-700">My Orders</span>
+              </button>
+              
+              {/* Settings */}
+              <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-lg transition text-left">
+                <Settings className="w-5 h-5 text-gray-600" />
+                <span className="text-gray-700">Settings</span>
+              </button>
+              
+              <hr className="my-4" />
+              
+              {/* Sign Out */}
+              <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 rounded-lg transition text-left text-red-600">
+                <LogOut className="w-5 h-5" />
+                <span>Sign Out</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
