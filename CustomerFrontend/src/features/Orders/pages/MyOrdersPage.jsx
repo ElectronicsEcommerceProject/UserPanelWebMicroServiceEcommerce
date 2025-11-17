@@ -135,7 +135,7 @@ const MyOrdersPage = () => {
     >
       <div className="max-w-7xl mx-auto px-4 py-4 md:py-8">
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/home')}
           className="mb-4 flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition cursor-pointer text-sm md:text-base"
         >
           <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
