@@ -139,7 +139,7 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=profile');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <User className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Profile Information</span>
@@ -149,7 +149,7 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=address');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <Package className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Manage Address</span>
@@ -159,7 +159,7 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=orders');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <Package className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">My Orders</span>
@@ -169,7 +169,7 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=notifications');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <Bell className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Notifications</span>
@@ -179,7 +179,7 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=wishlist');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <Heart className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Wishlist</span>
@@ -189,7 +189,7 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=cart');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <ShoppingCart className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Cart</span>
@@ -199,13 +199,19 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                                   navigate('/orders?section=settings');
                                   setShowUserDropdown(false);
                                 }}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition"
+                                className="w-full px-4 py-3 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 transition cursor-pointer"
                               >
                                 <Settings className="w-5 h-5 text-gray-600" />
                                 <span className="text-gray-700">Settings</span>
                               </button>
                               <hr className="my-2" />
-                              <button className="w-full px-4 py-3 text-left hover:bg-red-50 rounded-lg flex items-center gap-3 transition text-red-600">
+                              <button 
+                                onClick={() => {
+                                  navigate('/');
+                                  setShowUserDropdown(false);
+                                }}
+                                className="w-full px-4 py-3 text-left hover:bg-red-50 rounded-lg flex items-center gap-3 transition text-red-600 cursor-pointer"
+                              >
                                 <LogOut className="w-5 h-5" />
                                 <span>Sign Out</span>
                               </button>
@@ -321,7 +327,13 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
               <hr className="my-4" />
               
               {/* Sign Out */}
-              <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 rounded-lg transition text-left text-red-600">
+              <button 
+                onClick={() => {
+                  navigate('/');
+                  setShowMobileMenu(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 rounded-lg transition text-left text-red-600"
+              >
                 <LogOut className="w-5 h-5" />
                 <span>Sign Out</span>
               </button>
