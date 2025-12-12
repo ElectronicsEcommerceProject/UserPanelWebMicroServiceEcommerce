@@ -30,7 +30,7 @@ const HomePage = () => {
     if (category) {
       setSelectedCategory(category);
       setTimeout(() => {
-        window.scrollTo({ top: 600, behavior: 'smooth' });
+        document.getElementById('featured-products')?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
   }, [searchParams]);

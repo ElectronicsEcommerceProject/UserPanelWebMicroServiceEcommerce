@@ -23,10 +23,11 @@ const Navigation = ({ onCategoryChange }) => {
     setActiveCategory(categoryName);
     setShowCategoryDropdown(false);
     
-    if (location.pathname === '/orders') {
-      navigate(`/?category=${encodeURIComponent(categoryName)}`);
+    if (location.pathname !== '/home') {
+      navigate(`/home?category=${encodeURIComponent(categoryName)}#featured-products`);
     } else if (onCategoryChange) {
       onCategoryChange(categoryName);
+      document.getElementById('featured-products')?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

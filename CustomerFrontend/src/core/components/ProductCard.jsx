@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Heart, ShoppingCart, Star, Eye, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product, onAddToCart, onToggleWishlist, isWishlisted = false }) => {
   const [imageLoading, setImageLoading] = useState(true);
+  const navigate = useNavigate();
 
   const discountPercentage = product.discount || 0;
   const originalPrice = product.price;
   const discountedPrice = originalPrice - (originalPrice * discountPercentage / 100);
 
   return (
-    <div className="group relative bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer">
+    <div 
+      onClick={() => navigate(`/product/${product.id}`)}
+      className="group relative bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
+    >
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {discountPercentage > 0 && (

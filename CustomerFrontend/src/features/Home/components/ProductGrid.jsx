@@ -179,7 +179,7 @@ const ProductGrid = ({ selectedCategory = 'All Products', searchTerm = '', onAdd
       </div>
 
       {/* Products Section */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div id="featured-products" className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Featured Products</h2>
           <p className="text-gray-600">

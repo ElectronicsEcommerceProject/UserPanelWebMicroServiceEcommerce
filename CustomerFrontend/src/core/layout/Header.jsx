@@ -36,7 +36,10 @@ const Header = ({ onCategoryChange, onSearch, cartCount = 0, wishlistCount = 0, 
                 >
                   {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
-                <div className="flex items-center gap-3">
+                <div 
+                  onClick={() => navigate('/home#featured-products')}
+                  className="flex items-center gap-3 cursor-pointer"
+                >
                   <div className="bg-white/20 backdrop-blur-sm p-2.5 rounded-xl">
                     <ShoppingCart className="w-7 h-7 text-white" />
                   </div>
