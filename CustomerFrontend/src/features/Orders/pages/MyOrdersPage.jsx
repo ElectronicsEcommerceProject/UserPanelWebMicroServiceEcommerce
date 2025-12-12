@@ -18,7 +18,14 @@ const MyOrdersPage = () => {
 
   useEffect(() => {
     const section = searchParams.get('section');
-    if (section) setActiveSection(section);
+    if (section) {
+      setActiveSection(section);
+      // Force refresh cart and wishlist from localStorage when section changes
+      const savedCart = localStorage.getItem('cart');
+      const savedWishlist = localStorage.getItem('wishlist');
+      if (savedCart) setCart(JSON.parse(savedCart));
+      if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+    }
   }, [searchParams]);
   const [wishlist, setWishlist] = useState(() => {
     const saved = localStorage.getItem('wishlist');
